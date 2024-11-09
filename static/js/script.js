@@ -300,6 +300,7 @@ setInterval(sendDataToBackend, 2000);
 
 document.addEventListener("DOMContentLoaded", function () {
   updateContextList();
+  updateLineNumbers();  // Initialize line numbers on load
 
   const inputLayer = document.getElementById("inputLayer");
   if (inputLayer) {
@@ -307,14 +308,10 @@ document.addEventListener("DOMContentLoaded", function () {
       if (event.key === "Tab") {
         event.preventDefault();
 
-        // Get the cursor position
         const start = this.selectionStart;
         const end = this.selectionEnd;
 
-        // Insert two spaces
         this.value = this.value.substring(0, start) + "    " + this.value.substring(end);
-
-        // Move the cursor after the inserted spaces
         this.selectionStart = this.selectionEnd = start + 4;
       }
     });
