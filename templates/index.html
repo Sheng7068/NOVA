@@ -10,20 +10,6 @@
     <!-- Title -->
     <h1>Title</h1>
 
-    <!-- Highlighted Text Display -->
-    <label for="inputLayer">Textbox:</label>
-    <div class="highlight-container">
-      <div id="highlightOverlay"></div>
-      <textarea
-        id="inputLayer"
-        rows="3"
-        placeholder="Enter your text here..."
-        oninput="enforceMaxRows(); updateHighlight(); logEachLine()"
-      ></textarea>
-    </div>
-
-    <br /><br />
-
     <!-- Line number query -->
     <label for="lineNumberBox">Line number:</label>
     <input
@@ -46,5 +32,20 @@
       placeholder="Enter search query here..."
       oninput="updateHighlight()"
     />
+
+    <br /><br />
+
+    <!-- Highlighted Text Display -->
+    <label for="inputLayer">Textbox:</label>
+    <div class="highlight-container">
+      <div id="highlightOverlay"></div>
+      <textarea
+        id="inputLayer"
+        rows="100"
+        cols="80"
+        placeholder="Enter your text here..."
+        oninput="enforceMaxRows(); updateHighlight(); logEachLine()"
+      ></textarea>
+    </div>
   </body>
 </html>

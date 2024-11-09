@@ -1,7 +1,7 @@
 /* Container with relative positioning */
 .highlight-container {
   position: relative;
-  width: 50%;
+  width: 95%;
 }
 
 /* Background layer for highlighting */
@@ -46,4 +46,5 @@ mark {
   margin: 0;
   line-height: inherit;
   display: inline;
+  z-index: 2;
 }
