@@ -12,8 +12,11 @@ def index():
 @app.route("/submit_data", methods=["POST"])
 def submit_data():
     data = request.get_json()
-    previous_suggestions = []
+    context_list = data.get("contextList", [])
     user_added_prompts = []
+    for d in context_list:
+        user_added_prompts.append((d["keyword"], d["suggestion"]))
+    previous_suggestions = []
     full_input = data.get("bigInput", "")
     full_input = full_input.split("\n")
     for i in range(len(full_input)):
