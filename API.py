@@ -104,9 +104,9 @@ def prompt_GPT(previous_suggestions, user_added_prompts, code):
     # print(parsed_suggestions)
     return parsed_suggestions
 
-code = "def factorial(n): return 1"
-previous_suggestions = []
-user_added_prompts = [("correctness", "make sure that the code is correct based on the context of what is being written. Infer what a function is trying to do, and think about edge cases and other non-obvious inputs that could crash the function or cause it to return some incorrect value. Don’t make any suggestions on correctness if it is unclear what the function is trying to do. You want to minimize the number of false positives."),
-                          ("style", "only look for misspellings.")]
-previous_suggestions = prompt_GPT(previous_suggestions, user_added_prompts, code)
-prompt_GPT(previous_suggestions, user_added_prompts, code)
+# code = "def factorial(n): return 1"
+# previous_suggestions = []
+# user_added_prompts = [("correctness", "make sure that the code is correct based on the context of what is being written. Infer what a function is trying to do, and think about edge cases and other non-obvious inputs that could crash the function or cause it to return some incorrect value. Don’t make any suggestions on correctness if it is unclear what the function is trying to do. You want to minimize the number of false positives."),
+#                           ("style", "only look for misspellings.")]
+# previous_suggestions = prompt_GPT(previous_suggestions, user_added_prompts, code)
+# prompt_GPT(previous_suggestions, user_added_prompts, code)
