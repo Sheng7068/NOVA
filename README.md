@@ -31,10 +31,11 @@ Interact with ChatGPT
 
 Step 1: Write Code
 
-`def factorial(n):
+`def factorial(n):`
+    
     if n == 0:
         return 1
-    return factorial(n - 1)`
+    return factorial(n - 1)
 
 Step 2: Get Feedback from ChatGPT
 
@@ -42,10 +43,11 @@ ChatGPT: "[line 4] correctness: please consider multiplying the recursive case b
 
 Step 3: Improve the Code Based on Feedback
 
-`def factorial(n):
+`def factorial(n):`
+
     if n == 0:
         return 1
-    return n * factorial(n - 1)`
+    return n * factorial(n - 1)
 
 Benefits of Using GPT Dynamic Code Reviewer
 Real-Time Assistance: Get immediate, AI-driven feedback as you code, reducing the time spent debugging and improving the quality of your work.
