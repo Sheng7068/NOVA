@@ -250,15 +250,34 @@ function sendDataToBackend() {
 function populateSuggestionsBox(suggestions) {
   const suggestionContent = document.getElementById("suggestionContent");
 
-  // Append only new suggestions
-  suggestions.forEach(([lineNumber, substring, suggestionText]) => {
-    suggestionContent.innerHTML += `
-      <p><strong>Line ${lineNumber}:</strong> "${substring}"</p>
-      <p><em>Suggestion: ${suggestionText}</em></p>
-      <hr />
+  suggestions.forEach(([lineNumber, substring, suggestionText], index) => {
+    const suggestionId = `${lineNumber}-${substring}-${index}`; // Create unique ID for each suggestion
+
+    const suggestionHTML = `
+      <div id="${suggestionId}" class="suggestion-item">
+        <p><strong>Line ${lineNumber}:</strong> "${substring}"</p>
+        <p><em>Suggestion: ${suggestionText}</em></p>
+        <button onclick="deleteSuggestion('${suggestionId}', ${index})">Delete</button>
+        <hr />
+      </div>
     `;
+
+    suggestionContent.innerHTML += suggestionHTML;
   });
 }
 
-// Automatically call sendDataToBackend every 2 seconds
-setInterval(sendDataToBackend, 2000);
+// Function to delete a suggestion
+function deleteSuggestion(suggestionId, index) {
+  // Remove from memory
+  previousSuggestions.splice(index, 1);
+
+  // Remove from DOM
+  const suggestionElement = document.getElementById(suggestionId);
+  if (suggestionElement) {
+    suggestionElement.remove();
+  }
+}
+
+
+// Automatically call sendDataToBackend every 4 seconds
+setInterval(sendDataToBackend, 4000);
