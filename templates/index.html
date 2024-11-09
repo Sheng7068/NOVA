@@ -71,37 +71,6 @@
         <button onclick="addContext()">Add Context</button>
       </div>
 
-      <!-- Output from LLM -->
-      <div class="output-section">
-        <h2>OUTPUT FROM LLM</h2>
-        <label for="lineNumberBox">Line numbers (comma-separated):</label>
-        <input
-          type="text"
-          id="lineNumberBox"
-          name="lineNumberBox"
-          placeholder="Enter line numbers to query here..."
-          oninput="updateHighlight(); updateSuggestionsBox()"
-        />
-
-        <label for="searchTextbox">Search substrings (comma-separated):</label>
-        <input
-          type="text"
-          id="searchTextbox"
-          name="searchTextbox"
-          placeholder="Enter search substrings here..."
-          oninput="updateHighlight(); updateSuggestionsBox()"
-        />
-
-        <label for="suggestionTextbox">Suggestions (comma-separated):</label>
-        <input
-          type="text"
-          id="suggestionTextbox"
-          name="suggestionTextbox"
-          placeholder="Enter suggestions here..."
-          oninput="updateSuggestionsBox()"
-        />
-      </div>
-
       <!-- Display server response -->
       <div id="serverResponse"></div>
     </div>

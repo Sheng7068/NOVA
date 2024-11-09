@@ -149,9 +149,42 @@ function updateSuggestionsBox() {
 }
 
 // Store context suggestions as an array of objects
+// Store cumulative context suggestions and suggestions received from GPT
 const contextSuggestions = [];
 let previousSuggestions = [];
 
+// Function to update the displayed context list
+function updateContextList() {
+  const contextList = document.getElementById("contextList");
+  contextList.innerHTML = ""; // Clear existing rows
+
+  // Loop through context suggestions and render each one
+  contextSuggestions.forEach((context, index) => {
+    const row = document.createElement("tr");
+
+    // Keyword cell
+    const keywordCell = document.createElement("td");
+    keywordCell.textContent = context.keyword;
+    row.appendChild(keywordCell);
+
+    // Suggestion cell
+    const suggestionCell = document.createElement("td");
+    suggestionCell.textContent = context.suggestion;
+    row.appendChild(suggestionCell);
+
+    // Actions cell with delete button
+    const actionsCell = document.createElement("td");
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.onclick = () => deleteContext(index); // Bind delete action
+    actionsCell.appendChild(deleteButton);
+    row.appendChild(actionsCell);
+
+    contextList.appendChild(row); // Add the row to the table body
+  });
+}
+
+// Call updateContextList() after adding a new context
 function addContext() {
   const keyword = document.getElementById("keywordInput").value.trim();
   const suggestion = document.getElementById("contextSuggestionInput").value.trim();
@@ -163,7 +196,7 @@ function addContext() {
 
   // Add the new context to the list
   contextSuggestions.push({ keyword, suggestion });
-  updateContextList();
+  updateContextList(); // Update the display immediately after adding
 
   // Clear input fields
   document.getElementById("keywordInput").value = "";
@@ -172,41 +205,10 @@ function addContext() {
 
 // Function to delete a context suggestion
 function deleteContext(index) {
-  contextSuggestions.splice(index, 1);
-  updateContextList();
+  contextSuggestions.splice(index, 1); // Remove the item at the given index
+  updateContextList(); // Refresh the display
 }
 
-// Function to update the displayed context list
-function updateContextList() {
-  const contextList = document.getElementById("contextList");
-  contextList.innerHTML = "";
-
-  contextSuggestions.forEach((context, index) => {
-    const row = document.createElement("tr");
-
-    // Create keyword cell
-    const keywordCell = document.createElement("td");
-    keywordCell.textContent = context.keyword;
-    row.appendChild(keywordCell);
-
-    // Create suggestion cell
-    const suggestionCell = document.createElement("td");
-    suggestionCell.textContent = context.suggestion;
-    row.appendChild(suggestionCell);
-
-    // Create actions cell with delete button
-    const actionsCell = document.createElement("td");
-    const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Delete";
-    deleteButton.onclick = () => deleteContext(index);
-    actionsCell.appendChild(deleteButton);
-    row.appendChild(actionsCell);
-
-    contextList.appendChild(row);
-  });
-}
-
-// Function to send context list and textarea content to the backend
 function sendDataToBackend() {
   const textContent = document.getElementById("inputLayer").value;
 
@@ -223,13 +225,20 @@ function sendDataToBackend() {
   })
     .then((response) => response.json())
     .then((data) => {
-      // Update the UI with the response message
+      // Display a message from the backend
       document.getElementById("serverResponse").innerText = data.message;
 
-      // If new suggestions are received, add them to the cumulative previousSuggestions array
+      // If new suggestions are received, add only unique suggestions
       if (data.suggestions) {
-        previousSuggestions = previousSuggestions.concat(data.suggestions); // Accumulate suggestions
-        populateSuggestionsBox(data.suggestions); // Display only new suggestions
+        // Filter out suggestions that have already been displayed
+        const newSuggestions = data.suggestions.filter((suggestion) =>
+          !previousSuggestions.some(
+            (prev) => prev[0] === suggestion[0] && prev[1] === suggestion[1]
+          )
+        );
+
+        previousSuggestions = previousSuggestions.concat(newSuggestions);
+        populateSuggestionsBox(newSuggestions); // Display only new suggestions
       }
     })
     .catch((error) => {
@@ -237,14 +246,12 @@ function sendDataToBackend() {
     });
 }
 
-// Function to populate the suggestions box
+// Function to populate suggestions without clearing previous content
 function populateSuggestionsBox(suggestions) {
   const suggestionContent = document.getElementById("suggestionContent");
 
-  // Append new suggestions without clearing previous content
-  suggestions.forEach(suggestion => {
-    const [lineNumber, substring, suggestionText] = suggestion;
-
+  // Append only new suggestions
+  suggestions.forEach(([lineNumber, substring, suggestionText]) => {
     suggestionContent.innerHTML += `
       <p><strong>Line ${lineNumber}:</strong> "${substring}"</p>
       <p><em>Suggestion: ${suggestionText}</em></p>
@@ -253,5 +260,5 @@ function populateSuggestionsBox(suggestions) {
   });
 }
 
-// Call sendDataToBackend every 2 seconds
+// Automatically call sendDataToBackend every 2 seconds
 setInterval(sendDataToBackend, 2000);
