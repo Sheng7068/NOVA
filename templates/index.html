@@ -2,115 +2,108 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>My Frontend</title>
+    <title>CodeSquiggle</title>
     <link rel="stylesheet" href="../static/css/style.css" />
     <script src="../static/js/script.js"></script>
   </head>
   <body>
-    <!-- Title -->
-    <h1>Title</h1>
+    <!-- Main Container -->
+    <div class="main-container">
+      <!-- Title -->
+      <h1>CodeSquiggle</h1>
 
-    <!-- Context input fields -->
-    <h2>INPUT TO LLM</h2>
-    <label for="keywordInput">Keyword:</label>
-    <input type="text" id="keywordInput" placeholder="Enter keyword" />
+      <!-- Context list display -->
+      <div class="context-section">
+        <h2>Context List</h2>
+        <table id="contextTable">
+          <thead>
+            <tr>
+              <th>Keyword</th>
+              <th>Suggestion</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="contextList">
+            <!-- Dynamic context items will appear here -->
+          </tbody>
+        </table>
+      </div>
 
-    <label for="contextSuggestionInput">Suggestion:</label>
-    <input
-      type="text"
-      id="contextSuggestionInput"
-      placeholder="Enter suggestion"
-    />
+      <!-- Editor and Suggestion Box -->
+      <div class="editor-suggestion-container">
+        <!-- Line numbers and text editor container -->
+        <div class="editor-container">
+          <div id="lineNumbers" class="line-numbers"></div>
+          <div class="highlight-container">
+            <div id="highlightOverlay"></div>
+            <textarea
+              id="inputLayer"
+              rows="20"
+              cols="80"
+              placeholder="Enter your code here..."
+              oninput="enforceMaxRows(); updateHighlight(); updateLineNumbers(); logEachLine()"
+              onscroll="syncScroll()"
+            ></textarea>
+          </div>
+        </div>
 
-    <button onclick="addContext()">Add Context</button>
-
-    <!-- Context list display -->
-    <div class="context-list">
-      <h4>Context List</h4>
-      <table id="contextTable">
-        <thead>
-          <tr>
-            <th>Keyword</th>
-            <th>Suggestion</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="contextList">
-          <!-- Dynamic context items will appear here -->
-        </tbody>
-      </table>
-    </div>
-
-    <br /><br />
-
-    <!-- Line number query -->
-    <h2>OUTPUT FROM LLM</h2>
-    <label for="lineNumberBox">Line numbers (comma-separated):</label>
-    <input
-      type="text"
-      id="lineNumberBox"
-      name="lineNumberBox"
-      placeholder="Enter line numbers to query here..."
-      oninput="updateHighlight(); updateSuggestionsBox()"
-    />
-
-    <br /><br />
-
-    <!-- Search query -->
-    <label for="searchTextbox">Search substrings (comma-separated):</label>
-    <input
-      type="text"
-      id="searchTextbox"
-      name="searchTextbox"
-      placeholder="Enter search substrings here..."
-      oninput="updateHighlight(); updateSuggestionsBox()"
-    />
-
-    <br /><br />
-
-    <!-- Suggestion input -->
-    <label for="suggestionTextbox">Suggestions (comma-separated):</label>
-    <input
-      type="text"
-      id="suggestionTextbox"
-      name="suggestionTextbox"
-      placeholder="Enter suggestions here..."
-      oninput="updateSuggestionsBox()"
-    />
-
-    <br /><br />
-
-    <!-- Main container for text editor, line numbers, and suggestion box -->
-    <h2>VISUAL TEXT FIELD</h2>
-    <div style="display: flex; gap: 20px">
-      <!-- Line numbers and text editor container -->
-      <div class="editor-container">
-        <!-- Line numbers column -->
-        <div id="lineNumbers" class="line-numbers"></div>
-
-        <!-- Highlighted Text Display -->
-        <div class="highlight-container">
-          <div id="highlightOverlay"></div>
-          <textarea
-            id="inputLayer"
-            rows="20"
-            cols="80"
-            placeholder="Enter your text here..."
-            oninput="enforceMaxRows(); updateHighlight(); updateLineNumbers(); logEachLine()"
-            onscroll="syncScroll()"
-          ></textarea>
+        <!-- Suggestion Box -->
+        <div class="suggestion-box">
+          <h3>Suggestions</h3>
+          <div id="suggestionContent" class="suggestion"></div>
         </div>
       </div>
 
-      <!-- Suggestion box -->
-      <div class="suggestion-box">
-        <h3>Suggestions</h3>
-        <div id="suggestionContent" class="suggestion"></div>
-      </div>
-    </div>
+      <!-- Divider -->
+      <hr class="divider" />
 
-    <br /><br />
-    <!-- Display server response -->
-    <div id="serverResponse"></div>
+      <!-- Input to LLM (Hidden Section) -->
+      <div class="input-section">
+        <h2>INPUT TO LLM</h2>
+        <label for="keywordInput">Keyword:</label>
+        <input type="text" id="keywordInput" placeholder="Enter keyword" />
+        <label for="contextSuggestionInput">Suggestion:</label>
+        <input
+          type="text"
+          id="contextSuggestionInput"
+          placeholder="Enter suggestion"
+        />
+        <button onclick="addContext()">Add Context</button>
+      </div>
+
+      <!-- Output from LLM -->
+      <div class="output-section">
+        <h2>OUTPUT FROM LLM</h2>
+        <label for="lineNumberBox">Line numbers (comma-separated):</label>
+        <input
+          type="text"
+          id="lineNumberBox"
+          name="lineNumberBox"
+          placeholder="Enter line numbers to query here..."
+          oninput="updateHighlight(); updateSuggestionsBox()"
+        />
+
+        <label for="searchTextbox">Search substrings (comma-separated):</label>
+        <input
+          type="text"
+          id="searchTextbox"
+          name="searchTextbox"
+          placeholder="Enter search substrings here..."
+          oninput="updateHighlight(); updateSuggestionsBox()"
+        />
+
+        <label for="suggestionTextbox">Suggestions (comma-separated):</label>
+        <input
+          type="text"
+          id="suggestionTextbox"
+          name="suggestionTextbox"
+          placeholder="Enter suggestions here..."
+          oninput="updateSuggestionsBox()"
+        />
+      </div>
+
+      <!-- Display server response -->
+      <div id="serverResponse"></div>
+    </div>
   </body>
 </html>

@@ -3,33 +3,41 @@ from API import *
 
 app = Flask(__name__)
 
+
 # Serve the HTML file
 @app.route("/")
 def index():
-    return render_template("index.html")  # Ensure `index.html` is in a `templates` folder
+    return render_template(
+        "index.html")  # Ensure `index.html` is in a `templates` folder
 
-# Endpoint to receive context list and textarea content
+
+# Endpoint to receive context list, textarea content, and previous suggestions
 @app.route("/submit_data", methods=["POST"])
 def submit_data():
     data = request.get_json()
-    context_list = data.get("contextList", [])
-    user_added_prompts = []
-    for d in context_list:
-        user_added_prompts.append((d["keyword"], d["suggestion"]))
 
-    previous_suggestions = []
-    
+    context_list = data.get("contextList", [])
+    user_added_prompts = [(d["keyword"], d["suggestion"]) for d in context_list]
+
+    # Get all accumulated previous suggestions
+    previous_suggestions = data.get("previousSuggestions", [])
+    previous_suggestions = [(d["keyword"], d["suggestion"]) for d in context_list]
+
+    # Process big input text for line numbers
     full_input = data.get("bigInput", "")
     full_input = full_input.split("\n")
     for i in range(len(full_input)):
         full_input[i] = f"{str(i + 1)} {full_input[i]}"
     code = "\n".join(full_input)
-    # Example: Log the received data
-    # print("Context List:", context_list)
-    # print("Big Input Text:", big_input)
-    print(prompt_GPT(previous_suggestions, user_added_prompts, code))
-    
-    # Perform any processing needed here and send a response back
-    return jsonify({"message": "Data received successfully!"})
+
+    # Generate new suggestions from GPT using the accumulated suggestions
+    new_suggestions = prompt_GPT(previous_suggestions, user_added_prompts, code)
+    print(new_suggestions)
+
+    # Return new suggestions to accumulate and display in the frontend
+    return jsonify({"message": "Data received successfully!",
+                    "suggestions": new_suggestions})
+
+
 if __name__ == "__main__":
     app.run(debug=True)
