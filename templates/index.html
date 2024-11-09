@@ -11,41 +11,67 @@
     <h1>Title</h1>
 
     <!-- Line number query -->
-    <label for="lineNumberBox">Line number:</label>
+    <label for="lineNumberBox">Line numbers (comma-separated):</label>
     <input
-      type="number"
+      type="text"
       id="lineNumberBox"
       name="lineNumberBox"
-      value="1"
-      placeholder="Enter line number to query here..."
-      oninput="updateHighlight()"
+      placeholder="Enter line numbers to query here..."
+      oninput="updateHighlight(); updateSuggestionsBox()"
     />
 
     <br /><br />
 
     <!-- Search query -->
-    <label for="searchTextbox">Search query:</label>
+    <label for="searchTextbox">Search substrings (comma-separated):</label>
     <input
       type="text"
       id="searchTextbox"
       name="searchTextbox"
-      placeholder="Enter search query here..."
-      oninput="updateHighlight()"
+      placeholder="Enter search substrings here..."
+      oninput="updateHighlight(); updateSuggestionsBox()"
     />
 
     <br /><br />
 
-    <!-- Highlighted Text Display -->
-    <label for="inputLayer">Textbox:</label>
-    <div class="highlight-container">
-      <div id="highlightOverlay"></div>
-      <textarea
-        id="inputLayer"
-        rows="100"
-        cols="80"
-        placeholder="Enter your text here..."
-        oninput="enforceMaxRows(); updateHighlight(); logEachLine()"
-      ></textarea>
+    <!-- Suggestion input -->
+    <label for="suggestionTextbox">Suggestions (comma-separated):</label>
+    <input
+      type="text"
+      id="suggestionTextbox"
+      name="suggestionTextbox"
+      placeholder="Enter suggestions here..."
+      oninput="updateSuggestionsBox()"
+    />
+
+    <br /><br />
+
+    <!-- Main container for text editor, line numbers, and suggestion box -->
+    <div style="display: flex; gap: 20px">
+      <!-- Line numbers and text editor container -->
+      <div class="editor-container">
+        <!-- Line numbers column -->
+        <div id="lineNumbers" class="line-numbers"></div>
+
+        <!-- Highlighted Text Display -->
+        <div class="highlight-container">
+          <div id="highlightOverlay"></div>
+          <textarea
+            id="inputLayer"
+            rows="20"
+            cols="80"
+            placeholder="Enter your text here..."
+            oninput="enforceMaxRows(); updateHighlight(); updateLineNumbers(); logEachLine()"
+            onscroll="syncScroll()"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Suggestion box -->
+      <div class="suggestion-box">
+        <h3>Suggestions</h3>
+        <div id="suggestionContent" class="suggestion"></div>
+      </div>
     </div>
   </body>
 </html>

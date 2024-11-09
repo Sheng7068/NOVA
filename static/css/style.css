@@ -1,7 +1,30 @@
 /* Container with relative positioning */
+.editor-container {
+  display: flex;
+  width: 60%;
+  position: relative;
+}
+
+/* Line numbers column styling */
+.line-numbers {
+  width: 40px;
+  padding: 10px;
+  text-align: right;
+  border-right: 1px solid #ccc;
+  color: #888;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  background-color: #f4f4f4;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: pre-wrap;
+}
+
+/* Container with relative positioning for text area */
 .highlight-container {
   position: relative;
-  width: 95%;
+  width: 100%;
 }
 
 /* Background layer for highlighting */
@@ -15,7 +38,7 @@
   white-space: pre-wrap;
   padding: 10px;
   box-sizing: border-box;
-  pointer-events: none; /* Ignore clicks */
+  pointer-events: none;
   z-index: 1;
   font-family: inherit;
   font-size: inherit;
@@ -28,17 +51,18 @@
   width: 100%;
   height: 100%;
   background: none;
-  border: 1px solid #ccc;
+  border: none;
   outline: none;
   padding: 10px;
   resize: none;
   font: inherit;
   white-space: pre-wrap;
-  overflow: hidden;
+  overflow: auto;
   z-index: 2;
   color: black;
 }
 
+/* Styling for highlighted text */
 mark {
   background-color: yellow;
   color: inherit;
@@ -47,4 +71,29 @@ mark {
   line-height: inherit;
   display: inline;
   z-index: 2;
+}
+
+/* Suggestion box styling */
+.suggestion-box {
+  width: 30%;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-box h3 {
+  margin-top: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.suggestion {
+  margin-bottom: 10px;
+}
+
+.suggestion p {
+  margin: 5px 0;
 }
