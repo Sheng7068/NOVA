@@ -99,7 +99,7 @@ def prompt_GPT(previous_suggestions, user_added_prompts, code):
     # user_added_prompts is a list of tuple (keyword, description)
     suggestions = ask_GPT("openai/gpt-4o", user_added_prompts, previous_suggestions, code, stream=False)
     parsed_suggestions = parse_suggestions(suggestions)
-    print(parsed_suggestions)
+    # print(parsed_suggestions)
     return parsed_suggestions
 
 # previous_suggestions = []
