@@ -16,7 +16,9 @@ def submit_data():
     user_added_prompts = []
     for d in context_list:
         user_added_prompts.append((d["keyword"], d["suggestion"]))
+
     previous_suggestions = []
+    
     full_input = data.get("bigInput", "")
     full_input = full_input.split("\n")
     for i in range(len(full_input)):
