@@ -150,8 +150,8 @@ function updateSuggestionsBox() {
 
 // Store context suggestions as an array of objects
 const contextSuggestions = [];
+let previousSuggestions = [];
 
-// Function to add a new context suggestion
 function addContext() {
   const keyword = document.getElementById("keywordInput").value.trim();
   const suggestion = document.getElementById("contextSuggestionInput").value.trim();
@@ -209,6 +209,7 @@ function updateContextList() {
 // Function to send context list and textarea content to the backend
 function sendDataToBackend() {
   const textContent = document.getElementById("inputLayer").value;
+
   fetch("/submit_data", {
     method: "POST",
     headers: {
@@ -217,14 +218,40 @@ function sendDataToBackend() {
     body: JSON.stringify({
       contextList: contextSuggestions,
       bigInput: textContent,
+      previousSuggestions: previousSuggestions, // Send all accumulated suggestions
     }),
   })
     .then((response) => response.json())
     .then((data) => {
+      // Update the UI with the response message
       document.getElementById("serverResponse").innerText = data.message;
+
+      // If new suggestions are received, add them to the cumulative previousSuggestions array
+      if (data.suggestions) {
+        previousSuggestions = previousSuggestions.concat(data.suggestions); // Accumulate suggestions
+        populateSuggestionsBox(data.suggestions); // Display only new suggestions
+      }
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 }
-setInterval(sendDataToBackend, 2000);  // 2000 milliseconds = 2 seconds
+
+// Function to populate the suggestions box
+function populateSuggestionsBox(suggestions) {
+  const suggestionContent = document.getElementById("suggestionContent");
+
+  // Append new suggestions without clearing previous content
+  suggestions.forEach(suggestion => {
+    const [lineNumber, substring, suggestionText] = suggestion;
+
+    suggestionContent.innerHTML += `
+      <p><strong>Line ${lineNumber}:</strong> "${substring}"</p>
+      <p><em>Suggestion: ${suggestionText}</em></p>
+      <hr />
+    `;
+  });
+}
+
+// Call sendDataToBackend every 2 seconds
+setInterval(sendDataToBackend, 2000);
