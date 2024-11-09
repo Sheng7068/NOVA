@@ -150,7 +150,7 @@ function updateSuggestionsBox() {
 
 // Store context suggestions as an array of objects
 // Store cumulative context suggestions and suggestions received from GPT
-const contextSuggestions = [{ 'keyword': 'style', 'suggestion': 'correct any egregious style errors' }, { 'keyword': 'correctness', 'suggestion': 'give me a specific fix to correct any logical issues' }];
+const contextSuggestions = [];
 let previousSuggestions = [];
 
 // Function to update the displayed context list
@@ -278,24 +278,9 @@ function deleteSuggestion(suggestionId, index) {
   }
 }
 
-function updateLineNumbers() {
-  const inputLayer = document.getElementById("inputLayer");
-  const lineNumbers = document.getElementById("lineNumbers");
-
-  // Split the text content by newlines to determine the number of lines
-  const lines = inputLayer.value.split(/\r?\n/);
-  lineNumbers.innerHTML = Array.from({ length: lines.length }, (_, i) => i + 1).join("\n");
-}
-
-function syncScroll() {
-  const inputLayer = document.getElementById("inputLayer");
-  const lineNumbers = document.getElementById("lineNumbers");
-
-  // Sync the scroll position of lineNumbers with inputLayer
-  lineNumbers.scrollTop = inputLayer.scrollTop;
-}
 
 // Automatically call sendDataToBackend every 4 seconds
+<<<<<<< HEAD
 setInterval(sendDataToBackend, 2000);
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -317,3 +302,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+=======
+setInterval(sendDataToBackend, 4000);
+>>>>>>> parent of 4dfa6b6 (stop botting)

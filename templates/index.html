@@ -15,22 +15,6 @@
       <!-- Context list display -->
       <div class="context-section">
         <h2>Context List</h2>
-
-        <!-- Input to LLM (Hidden Section) -->
-        <div class="input-section">
-          <label for="keywordInput">Keyword:</label>
-          <input type="text" id="keywordInput" placeholder="Enter keyword" />
-          <label for="contextSuggestionInput">Suggestion:</label>
-          <input
-            type="text"
-            id="contextSuggestionInput"
-            placeholder="Enter suggestion"
-          />
-          <button onclick="addContext()">Add Context</button>
-        </div>
-
-        <br />
-
         <table id="contextTable">
           <thead>
             <tr>
@@ -45,11 +29,7 @@
         </table>
       </div>
 
-      <!-- Divider -->
-      <hr class="divider" />
-
       <!-- Editor and Suggestion Box -->
-      <h2>Code Editor</h2>
       <div class="editor-suggestion-container">
         <!-- Line numbers and text editor container -->
         <div class="editor-container">
@@ -72,6 +52,23 @@
           <h3>Suggestions</h3>
           <div id="suggestionContent" class="suggestion"></div>
         </div>
+      </div>
+
+      <!-- Divider -->
+      <hr class="divider" />
+
+      <!-- Input to LLM (Hidden Section) -->
+      <div class="input-section">
+        <h2>INPUT TO LLM</h2>
+        <label for="keywordInput">Keyword:</label>
+        <input type="text" id="keywordInput" placeholder="Enter keyword" />
+        <label for="contextSuggestionInput">Suggestion:</label>
+        <input
+          type="text"
+          id="contextSuggestionInput"
+          placeholder="Enter suggestion"
+        />
+        <button onclick="addContext()">Add Context</button>
       </div>
 
       <!-- Display server response -->
