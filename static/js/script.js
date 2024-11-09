@@ -147,3 +147,61 @@ function updateSuggestionsBox() {
     `;
   }
 }
+
+// Store context suggestions as an array of objects
+const contextSuggestions = [];
+
+// Function to add a new context suggestion
+function addContext() {
+  const keyword = document.getElementById("keywordInput").value.trim();
+  const suggestion = document.getElementById("contextSuggestionInput").value.trim();
+
+  if (!keyword || !suggestion) {
+    alert("Please enter both a keyword and a suggestion.");
+    return;
+  }
+
+  // Add the new context to the list
+  contextSuggestions.push({ keyword, suggestion });
+  updateContextList();
+
+  // Clear input fields
+  document.getElementById("keywordInput").value = "";
+  document.getElementById("contextSuggestionInput").value = "";
+}
+
+// Function to delete a context suggestion
+function deleteContext(index) {
+  contextSuggestions.splice(index, 1);
+  updateContextList();
+}
+
+// Function to update the displayed context list
+function updateContextList() {
+  const contextList = document.getElementById("contextList");
+  contextList.innerHTML = "";
+
+  contextSuggestions.forEach((context, index) => {
+    const row = document.createElement("tr");
+
+    // Create keyword cell
+    const keywordCell = document.createElement("td");
+    keywordCell.textContent = context.keyword;
+    row.appendChild(keywordCell);
+
+    // Create suggestion cell
+    const suggestionCell = document.createElement("td");
+    suggestionCell.textContent = context.suggestion;
+    row.appendChild(suggestionCell);
+
+    // Create actions cell with delete button
+    const actionsCell = document.createElement("td");
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.onclick = () => deleteContext(index);
+    actionsCell.appendChild(deleteButton);
+    row.appendChild(actionsCell);
+
+    contextList.appendChild(row);
+  });
+}

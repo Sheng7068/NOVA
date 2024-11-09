@@ -10,7 +10,41 @@
     <!-- Title -->
     <h1>Title</h1>
 
+    <!-- Context input fields -->
+    <h2>INPUT TO LLM</h2>
+    <label for="keywordInput">Keyword:</label>
+    <input type="text" id="keywordInput" placeholder="Enter keyword" />
+
+    <label for="contextSuggestionInput">Suggestion:</label>
+    <input
+      type="text"
+      id="contextSuggestionInput"
+      placeholder="Enter suggestion"
+    />
+
+    <button onclick="addContext()">Add Context</button>
+
+    <!-- Context list display -->
+    <div class="context-list">
+      <h4>Context List</h4>
+      <table id="contextTable">
+        <thead>
+          <tr>
+            <th>Keyword</th>
+            <th>Suggestion</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="contextList">
+          <!-- Dynamic context items will appear here -->
+        </tbody>
+      </table>
+    </div>
+
+    <br /><br />
+
     <!-- Line number query -->
+    <h2>OUTPUT FROM LLM</h2>
     <label for="lineNumberBox">Line numbers (comma-separated):</label>
     <input
       type="text"
@@ -47,6 +81,7 @@
     <br /><br />
 
     <!-- Main container for text editor, line numbers, and suggestion box -->
+    <h2>VISUAL TEXT FIELD</h2>
     <div style="display: flex; gap: 20px">
       <!-- Line numbers and text editor container -->
       <div class="editor-container">
