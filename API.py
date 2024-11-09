@@ -4,7 +4,7 @@ import os
 # Import the openai package
 from openai import OpenAI
 
-def ask_GPT(model_name: str, user_added_prompts, already_made_suggestions, stream: bool = True):
+def ask_GPT(model_name: str, user_added_prompts, already_made_suggestions, code, stream: bool = True):
     """
     Examples of chat completions from the proxy
     """
@@ -60,10 +60,7 @@ Your suggestion list from the user is as follows:
 '''
             },
             {   "role": "user",
-                "content": "`1 def factorial(n):\n"
-                           " 2     assert(n >= 0)\n"
-                           " 3     if n == 0: return 1\n"
-                           " 4     else: return factorial(n - 1)`"
+                "content": code
             }
         ],
         stream=stream
@@ -91,8 +88,16 @@ def parse_suggestions(suggestions):
     return res
 
 
-def prompt_GPT(previous_suggestions, user_added_prompts):
-    suggestions = ask_GPT("openai/gpt-4o", user_added_prompts, previous_suggestions, stream=False)
+def prompt_GPT(previous_suggestions, user_added_prompts, code):
+    # code in form
+    # 1 def factorial(n):
+    # 2     if n <= 0: return 1
+    # 3     else: return n * factorial(n - 1)
+
+    # previous_suggestions is a list of tuple (n, substring, comment)
+
+    # user_added_prompts is a list of tuple (keyword, description)
+    suggestions = ask_GPT("openai/gpt-4o", user_added_prompts, previous_suggestions, code, stream=False)
     parsed_suggestions = parse_suggestions(suggestions)
     print(parsed_suggestions)
     return parsed_suggestions
