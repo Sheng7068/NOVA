@@ -133,7 +133,7 @@ button:hover {
   padding: 10px;
   color: #e0e0e0;
   font-size: 14px;
-  font-family: inherit;
+  font-family: monospace;
   white-space: pre-wrap;
   overflow: auto;
   z-index: 2;

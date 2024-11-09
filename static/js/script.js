@@ -150,7 +150,7 @@ function updateSuggestionsBox() {
 
 // Store context suggestions as an array of objects
 // Store cumulative context suggestions and suggestions received from GPT
-const contextSuggestions = [];
+const contextSuggestions = [{ 'keyword': 'style', 'suggestion': 'correct any egregious style errors' }, { 'keyword': 'correctness', 'suggestion': 'give me a specific fix to correct any logical issues' }];
 let previousSuggestions = [];
 
 // Function to update the displayed context list
@@ -278,6 +278,45 @@ function deleteSuggestion(suggestionId, index) {
   }
 }
 
+function updateLineNumbers() {
+  const inputLayer = document.getElementById("inputLayer");
+  const lineNumbers = document.getElementById("lineNumbers");
+
+  // Split the text content by newlines to determine the number of lines
+  const lines = inputLayer.value.split(/\r?\n/);
+  lineNumbers.innerHTML = Array.from({ length: lines.length }, (_, i) => i + 1).join("\n");
+}
+
+function syncScroll() {
+  const inputLayer = document.getElementById("inputLayer");
+  const lineNumbers = document.getElementById("lineNumbers");
+
+  // Sync the scroll position of lineNumbers with inputLayer
+  lineNumbers.scrollTop = inputLayer.scrollTop;
+}
 
 // Automatically call sendDataToBackend every 4 seconds
-setInterval(sendDataToBackend, 4000);
+setInterval(sendDataToBackend, 2000);
+
+document.addEventListener("DOMContentLoaded", function () {
+  updateContextList();
+
+  const inputLayer = document.getElementById("inputLayer");
+  if (inputLayer) {
+    inputLayer.addEventListener("keydown", function (event) {
+      if (event.key === "Tab") {
+        event.preventDefault();
+
+        // Get the cursor position
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+
+        // Insert two spaces
+        this.value = this.value.substring(0, start) + "    " + this.value.substring(end);
+
+        // Move the cursor after the inserted spaces
+        this.selectionStart = this.selectionEnd = start + 4;
+      }
+    });
+  }
+});
