@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from API import *
 
 app = Flask(__name__)
 
@@ -11,12 +12,17 @@ def index():
 @app.route("/submit_data", methods=["POST"])
 def submit_data():
     data = request.get_json()
-    context_list = data.get("contextList", [])
-    big_input = data.get("bigInput", "")
-    
+    previous_suggestions = []
+    user_added_prompts = []
+    full_input = data.get("bigInput", "")
+    full_input = full_input.split("\n")
+    for i in range(len(full_input)):
+        full_input[i] = f"{str(i + 1)} {full_input[i]}"
+    code = "\n".join(full_input)
     # Example: Log the received data
-    print("Context List:", context_list)
-    print("Big Input Text:", big_input)
+    # print("Context List:", context_list)
+    # print("Big Input Text:", big_input)
+    print(prompt_GPT(previous_suggestions, user_added_prompts, code))
     
     # Perform any processing needed here and send a response back
     return jsonify({"message": "Data received successfully!"})
