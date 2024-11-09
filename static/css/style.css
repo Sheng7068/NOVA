@@ -92,17 +92,13 @@ button:hover {
 
 .line-numbers {
   width: 40px;
-  padding-top: 10px;  /* Align numbers with the textarea padding */
-  padding-left: 5px;
-  padding-right: 5px;
+  padding: 10px;
   text-align: right;
   border-right: 1px solid #444;
   color: #888;
   background-color: #333;
   font-size: 14px;
-  white-space: pre-wrap;
-  overflow: hidden;
-} 
+}
 
 .highlight-container {
   position: relative;

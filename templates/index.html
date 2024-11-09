@@ -41,7 +41,7 @@
               rows="20"
               cols="80"
               placeholder="Enter your code here..."
-              oninput="updateLineNumbers();"
+              oninput="enforceMaxRows(); updateHighlight(); updateLineNumbers(); logEachLine()"
               onscroll="syncScroll()"
             ></textarea>
           </div>
