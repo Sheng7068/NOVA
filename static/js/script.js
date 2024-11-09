@@ -205,28 +205,3 @@ function updateContextList() {
     contextList.appendChild(row);
   });
 }
-
-// Function to send context list and textarea content to the backend
-function sendDataToBackend() {
-  const textContent = document.getElementById("inputLayer").value;
-
-  fetch("/submit_data", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      contextList: contextSuggestions,
-      bigInput: textContent,
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      document.getElementById("serverResponse").innerText = data.message;
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-}
-
-setInterval(sendDataToBackend, 2000);  // 2000 milliseconds = 2 seconds
