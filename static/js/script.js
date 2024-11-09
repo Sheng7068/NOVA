@@ -279,8 +279,7 @@ function deleteSuggestion(suggestionId, index) {
 }
 
 
-// Automatically call sendDataToBackend every 4 seconds
-<<<<<<< HEAD
+// Automatically call sendDataToBackend every 2 seconds
 setInterval(sendDataToBackend, 2000);
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -302,6 +301,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-=======
-setInterval(sendDataToBackend, 4000);
->>>>>>> parent of 4dfa6b6 (stop botting)
